@@ -32,7 +32,18 @@
           },
           "type": "array"
         },
+        "includeStages": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "generateSwaggerOnDeploy": {
+          "default": true,
+          "type": "boolean"
+        },
+        "deploySwagger": {
           "default": true,
           "type": "boolean"
         },

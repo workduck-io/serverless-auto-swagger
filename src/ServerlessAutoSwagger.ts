@@ -88,16 +88,24 @@ export default class ServerlessAutoSwagger {
   preDeploy = async () => {
     const stage = this.serverless.service.provider.stage;
     const excludedStages = this.serverless.service.custom?.autoswagger?.excludeStages;
+    const includedStages = this.serverless.service.custom?.autoswagger?.includeStages;
     if (excludedStages?.includes(stage!)) {
       this.log.notice(
         `Swagger lambdas will not be deployed for stage [${stage}], as it has been marked for exclusion.`
       );
       return;
     }
+    if (includedStages && !includedStages.includes(stage!)) {
+      this.log.notice(
+        `Swagger lambdas will not be deployed for stage [${stage}], as it has not been marked for inclusion.`
+      );
+      return;
+    }
 
     const generateSwaggerOnDeploy = this.serverless.service.custom?.autoswagger?.generateSwaggerOnDeploy ?? true;
     if (generateSwaggerOnDeploy) await this.generateSwagger();
-    this.addEndpointsAndLambda();
+    const deploySwagger = this.serverless.service.custom?.autoswagger?.deploySwagger ?? true;
+    if (deploySwagger) this.addEndpointsAndLambda();
   };
 
   /** Updates this.swagger with serverless custom.autoswagger overrides */

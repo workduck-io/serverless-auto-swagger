@@ -33,6 +33,7 @@ export interface AutoSwaggerCustomConfig {
   apiKeyHeaders?: string[];
   swaggerFiles?: string[];
   generateSwaggerOnDeploy?: boolean;
+  deploySwagger?: boolean;
   typefiles?: string[];
   useStage?: boolean;
   swaggerPath?: string;
@@ -41,6 +42,7 @@ export interface AutoSwaggerCustomConfig {
   schemes?: SwaggerScheme[];
   title?: string;
   excludeStages?: string[];
+  includeStages?: string[];
 }
 
 export type CustomWithAutoSwagger = Custom & { autoswagger?: AutoSwaggerCustomConfig };
